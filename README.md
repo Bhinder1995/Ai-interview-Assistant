@@ -26,7 +26,7 @@ Then open on your phone: `http://YOUR_COMPUTER_IP:3000`
 Open `src/App.jsx` — find this line and replace with your key:
 
 ```
-"x-anthropic-api-key": "YOUR_API_KEY_HERE"
+"Gemini Api key": "YOUR_API_KEY_HERE"
 ```
 
 ## Features
