@@ -23,8 +23,9 @@ export default function App() {
       answerLength: "medium",
       autoClear: true,
       sensitivity: "medium",
-      apiKey: "",
+      apiKey: import.meta.env.VITE_GEMINI_API_KEY || "",
       language: "en-US",
+      model: "gemini-1.5-flash",
       ...initial
     };
   });
@@ -43,7 +44,7 @@ export default function App() {
     return <SplashScreen onDone={() => setScreen("main")} />;
   }
   if (screen === "context") {
-    return <ContextScreen ctx={context} apiKey={settings.apiKey} onSave={ctx => { setContext(ctx); setScreen("main"); }} onBack={() => setScreen("main")} />;
+    return <ContextScreen ctx={context} settings={settings} onSave={ctx => { setContext(ctx); setScreen("main"); }} onBack={() => setScreen("main")} />;
   }
   if (screen === "settings") {
     return <SettingsScreen settings={settings} onChange={updateSetting} onBack={() => setScreen("main")} />;

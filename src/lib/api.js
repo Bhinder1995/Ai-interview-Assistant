@@ -34,12 +34,13 @@ export function fileToBase64(file) {
 }
 
 // ── Extract text from file via Gemini multimodal ─────────────────
-export async function extractTextFromFile(file, apiKey) {
+export async function extractTextFromFile(file, apiKey, model = "gemini-1.5-flash") {
   if (!apiKey) throw new Error("API Key missing");
   const base64 = await fileToBase64(file);
   const mediaType = file.type === "application/pdf" ? "application/pdf" : file.type;
 
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+  // Use v1beta for extraction as it's often more reliable for multimodal
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -58,7 +59,7 @@ export async function extractTextFromFile(file, apiKey) {
 }
 
 // ── AI Answer Generator ───────────────────────────────────────────
-export async function getAIAnswer({ question, resumeText, jobDesc, specialInstructions, answerLength, apiKey, language }) {
+export async function getAIAnswer({ question, resumeText, jobDesc, specialInstructions, answerLength, apiKey, language, model = "gemini-1.5-flash" }) {
   if (!apiKey) return "Please set your Gemini API Key in Settings.";
   
   const lengthInstruction = answerLength === "short"
@@ -96,7 +97,7 @@ ANSWER RULES:
     systemPrompt += `\n\nSPECIAL INSTRUCTIONS:\n${specialInstructions}`;
   }
 
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

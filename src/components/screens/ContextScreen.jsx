@@ -3,7 +3,8 @@ import { extractTextFromFile } from '../../lib/api';
 import { UploadZone } from '../ui/UploadZone';
 import { ArrowLeft, User, Building, Zap, CheckCircle2 } from 'lucide-react';
 
-export function ContextScreen({ ctx, apiKey, onSave, onBack }) {
+export function ContextScreen({ ctx, settings, onSave, onBack }) {
+  const { apiKey, model } = settings;
   const [resumeFile, setResumeFile] = useState(ctx.resumeFile || null);
   const [resumeText, setResumeText] = useState(ctx.resumeText || "");
   const [resumeLoading, setResumeLoading] = useState(false);
@@ -21,7 +22,7 @@ export function ContextScreen({ ctx, apiKey, onSave, onBack }) {
     setResumeFile(file);
     setResumeLoading(true);
     try { 
-      const t = await extractTextFromFile(file, apiKey); 
+      const t = await extractTextFromFile(file, apiKey, model); 
       setResumeText(t); 
     } catch (e) { 
       alert("Extraction failed: " + e.message);
@@ -35,7 +36,7 @@ export function ContextScreen({ ctx, apiKey, onSave, onBack }) {
     setJdFile(file);
     setJdFileLoading(true);
     try { 
-      const t = await extractTextFromFile(file, apiKey); 
+      const t = await extractTextFromFile(file, apiKey, model); 
       setJdFileText(t); 
     } catch (e) { 
       alert("Extraction failed: " + e.message);
