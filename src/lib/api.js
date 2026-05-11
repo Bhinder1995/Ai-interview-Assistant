@@ -6,12 +6,20 @@ const QUESTION_KEYWORDS = [
   "explain","describe","tell me","can you","could you","walk me",
   "difference between","define","give me","have you","do you","would you",
   "when do","when did","when would","where do","who do","which",
+  // Hindi/Hinglish
+  "kya","kaise","kyu","kyon","batao","samjhao","difference kya hai",
+  "can you tell","pucha","bolna","kya hai",
 ];
 
-export function isQuestion(text) {
-  if (!text || text.trim().length < 8) return false;
+export function isQuestion(text, sensitivity = "medium") {
+  if (!text || text.trim().length < 5) return false;
+  
+  const threshold = sensitivity === "low" ? 15 : sensitivity === "high" ? 5 : 8;
+  if (text.trim().length < threshold) return false;
+
   const lower = text.toLowerCase().trim();
   if (lower.endsWith("?")) return true;
+  
   return QUESTION_KEYWORDS.some(kw => lower.includes(kw));
 }
 
@@ -31,7 +39,7 @@ export async function extractTextFromFile(file, apiKey) {
   const base64 = await fileToBase64(file);
   const mediaType = file.type === "application/pdf" ? "application/pdf" : file.type;
 
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -88,7 +96,7 @@ ANSWER RULES:
     systemPrompt += `\n\nSPECIAL INSTRUCTIONS:\n${specialInstructions}`;
   }
 
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

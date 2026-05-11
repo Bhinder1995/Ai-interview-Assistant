@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { StatusPill } from '../ui/StatusPill';
-import { Settings, Clock, FileText, Mic, Square } from 'lucide-react';
+import { Settings, Clock, FileText, Mic, Square, Copy } from 'lucide-react';
 
 export function MainScreen({ 
   logic, 
@@ -12,6 +12,8 @@ export function MainScreen({
     status, transcript, detectedQ, answer, isListening, 
     startListening, stopListening, clearScreen 
   } = logic;
+
+  const [showToast, setShowToast] = React.useState(false);
 
   const transcriptBoxRef = useRef(null);
 
@@ -34,7 +36,10 @@ export function MainScreen({
           <img src="/logo.png" width="32" height="32" alt="Logo" style={{ borderRadius: '6px' }} />
           <div>
             <div className="app-title" style={{ marginBottom: 0 }}>AI Interview Assistant</div>
-            <StatusPill status={status} />
+            <div className={`status-pill status-${status}`}>
+              <span className="status-dot" />
+              {status}
+            </div>
           </div>
         </div>
         <div className="nav-actions">
@@ -93,6 +98,19 @@ export function MainScreen({
       {/* ── Answer ── */}
       <div className="section-label">AI ANSWER</div>
       <div className="answer-box glass-panel">
+        {answer && status !== "processing" && (
+          <button 
+            className="copy-button" 
+            onClick={() => {
+              navigator.clipboard.writeText(answer);
+              setShowToast(true);
+              setTimeout(() => setShowToast(false), 2000);
+            }}
+            title="Copy Answer"
+          >
+            <Copy size={16} />
+          </button>
+        )}
         {status === "processing" ? (
           <div className="processing-indicator">
             <span className="processing-text">Generating</span>
@@ -111,6 +129,8 @@ export function MainScreen({
           <div className="empty-answer">Answer will appear here</div>
         )}
       </div>
+
+      {showToast && <div className="toast fade-in">Copied to clipboard!</div>}
 
       {/* ── Controls ── */}
       <div className="controls-container">

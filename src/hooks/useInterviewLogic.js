@@ -64,7 +64,12 @@ export function useInterviewLogic(context, settings) {
     rec.onend = () => { if (isListeningRef.current) rec.start(); };
     rec.onerror = (e) => {
       if (e.error === "no-speech" || e.error === "aborted") return;
-      setStatus("error");
+      console.error("SR Error:", e.error);
+      if (isListeningRef.current) {
+        setTimeout(() => {
+          try { rec.start(); } catch {}
+        }, 1000);
+      }
     };
     rec.onresult = (event) => {
       let interim = "", final = "";
@@ -76,7 +81,7 @@ export function useInterviewLogic(context, settings) {
       transcriptRef.current = (transcriptRef.current + final).slice(-800);
       setTranscript(display);
       
-      if (final.trim() && isQuestion(final.trim())) {
+      if (final.trim() && isQuestion(final.trim(), settings.sensitivity)) {
         handleQuestion(final.trim().replace(/\s+/g, " "));
       }
     };

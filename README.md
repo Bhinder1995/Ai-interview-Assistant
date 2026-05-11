@@ -1,42 +1,39 @@
-# AI Interview Assistant
+# AI Interview Assistant (Gemini Edition)
 
-A silent, real-time AI-powered interview helper that listens passively and instantly shows short readable answers on your phone screen.
+A silent, real-time AI-powered interview helper that listens passively and instantly shows short readable answers on your screen. Optimized for Gemini 1.5 Flash.
 
 ## Quick Setup
 
-See the included `SETUP-GUIDE.pdf` for full step-by-step instructions with screenshots.
-
-## Requirements
-
-- Node.js 18+ installed on your computer
-- Anthropic API key (get from console.anthropic.com)
-- Chrome browser on Android (for speech recognition)
+1.  **Get a Gemini API Key**: Visit [Google AI Studio](https://aistudio.google.com/) and get a free API key.
+2.  **Chrome on Android**: Use Chrome on Android or Desktop for the best speech recognition experience.
 
 ## Install & Run
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
-Then open on your phone: `http://YOUR_COMPUTER_IP:3000`
+Then open on your device: `http://YOUR_COMPUTER_IP:3000`
 
-## Add Your API Key
+## Configuration
 
-Open `src/App.jsx` — find this line and replace with your key:
-
-```
-"Gemini Api key": "YOUR_API_KEY_HERE"
-```
+1.  Open **Settings** in the app.
+2.  Paste your **Gemini API Key**.
+3.  Go to **Interview Context** to upload your Resume and JD.
 
 ## Features
 
-- Continuous microphone listening
-- Auto-detects interview questions
-- Resume upload (PDF or image)
-- Job description context (paste or upload)
-- Special instructions for personalized answers
-- Answer history
-- Settings: font size, answer length, sensitivity
-- No audio output — 100% silent text display
-"# Ai-interview-Assistant" 
+- **Multimodal Extraction**: Upload PDF/Image resumes and Gemini extracts the text automatically.
+- **Continuous Listening**: Passive microphone monitoring with auto-question detection.
+- **Hinglish Support**: Specifically tuned to detect questions in mixed Hindi/English.
+- **Adjustable Sensitivity**: Control how aggressively the AI detects questions.
+- **Stealth Design**: Minimalistic, high-contrast UI for quick reading.
+- **Copy to Clipboard**: Quick copy button for sharing or saving answers.
+
+## Tech Stack
+
+- **Frontend**: Vite + React
+- **Styling**: Vanilla CSS (Glassmorphism 2.0)
+- **AI**: Google Gemini 1.5 Flash
+- **PWA**: Installable as a standalone app on mobile.
