@@ -61,7 +61,13 @@ export function useInterviewLogic(context, settings) {
     rec.interimResults = true;
     rec.lang = settings.language || "en-US";
     rec.onstart = () => { setStatus("listening"); setIsListening(true); };
-    rec.onend = () => { if (isListeningRef.current) rec.start(); };
+    rec.onend = () => { 
+      if (isListeningRef.current) {
+        setTimeout(() => {
+          try { if (isListeningRef.current) rec.start(); } catch(e) {}
+        }, 300);
+      }
+    };
     rec.onerror = (e) => {
       if (e.error === "no-speech" || e.error === "aborted") return;
       console.error("SR Error:", e.error);

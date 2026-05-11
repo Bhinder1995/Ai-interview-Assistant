@@ -39,7 +39,7 @@ export async function extractTextFromFile(file, apiKey) {
   const base64 = await fileToBase64(file);
   const mediaType = file.type === "application/pdf" ? "application/pdf" : file.type;
 
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -96,7 +96,7 @@ ANSWER RULES:
     systemPrompt += `\n\nSPECIAL INSTRUCTIONS:\n${specialInstructions}`;
   }
 
-  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
