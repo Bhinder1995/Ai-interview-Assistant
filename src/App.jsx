@@ -23,7 +23,6 @@ export default function App() {
       answerLength: "medium",
       autoClear: true,
       sensitivity: "medium",
-      apiKey: import.meta.env.VITE_GEMINI_API_KEY || "",
       language: "en-US",
       model: "gemini-1.5-flash",
       ...initial

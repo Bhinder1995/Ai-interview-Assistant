@@ -11,16 +11,6 @@ export function SettingsScreen({ settings, onChange, onBack }) {
         <span className="screen-title">Settings</span>
       </div>
       <div className="settings-body">
-        <SettingRow label="Gemini API Key">
-          <input 
-            type="password" 
-            className="custom-textarea" 
-            style={{ height: "auto", padding: "12px" }}
-            placeholder="AIzaSy... (or set in .env)" 
-            value={settings.apiKey} 
-            onChange={e => onChange("apiKey", e.target.value)} 
-          />
-        </SettingRow>
         <SettingRow label="AI Model (Gemini)">
           <Segmented 
             options={["gemini-1.5-flash", "gemini-1.5-pro", "gemini-2.0-flash"]} 

@@ -4,7 +4,7 @@ import { UploadZone } from '../ui/UploadZone';
 import { ArrowLeft, User, Building, Zap, CheckCircle2 } from 'lucide-react';
 
 export function ContextScreen({ ctx, settings, onSave, onBack }) {
-  const { apiKey, model } = settings;
+  const { model } = settings;
   const [resumeFile, setResumeFile] = useState(ctx.resumeFile || null);
   const [resumeText, setResumeText] = useState(ctx.resumeText || "");
   const [resumeLoading, setResumeLoading] = useState(false);
@@ -18,11 +18,10 @@ export function ContextScreen({ ctx, settings, onSave, onBack }) {
   const [activeJdTab, setActiveJdTab] = useState(ctx.jdFile ? "file" : "paste");
 
   async function handleResumeFile(file) {
-    if (!apiKey) { alert("Please set your Gemini API Key in Settings first."); return; }
     setResumeFile(file);
     setResumeLoading(true);
     try { 
-      const t = await extractTextFromFile(file, apiKey, model); 
+      const t = await extractTextFromFile(file, model); 
       setResumeText(t); 
     } catch (e) { 
       alert("Extraction failed: " + e.message);
@@ -32,11 +31,10 @@ export function ContextScreen({ ctx, settings, onSave, onBack }) {
   }
 
   async function handleJdFile(file) {
-    if (!apiKey) { alert("Please set your Gemini API Key in Settings first."); return; }
     setJdFile(file);
     setJdFileLoading(true);
     try { 
-      const t = await extractTextFromFile(file, apiKey, model); 
+      const t = await extractTextFromFile(file, model); 
       setJdFileText(t); 
     } catch (e) { 
       alert("Extraction failed: " + e.message);

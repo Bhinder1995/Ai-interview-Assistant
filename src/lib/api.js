@@ -34,8 +34,9 @@ export function fileToBase64(file) {
 }
 
 // ── Extract text from file via Gemini multimodal ─────────────────
-export async function extractTextFromFile(file, apiKey, model = "gemini-1.5-flash") {
-  if (!apiKey) throw new Error("API Key missing");
+export async function extractTextFromFile(file, model = "gemini-1.5-flash") {
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (!apiKey) throw new Error("API Key missing in .env");
   const base64 = await fileToBase64(file);
   const mediaType = file.type === "application/pdf" ? "application/pdf" : file.type;
 
@@ -59,8 +60,9 @@ export async function extractTextFromFile(file, apiKey, model = "gemini-1.5-flas
 }
 
 // ── AI Answer Generator ───────────────────────────────────────────
-export async function getAIAnswer({ question, resumeText, jobDesc, specialInstructions, answerLength, apiKey, language, model = "gemini-1.5-flash" }) {
-  if (!apiKey) return "Please set your Gemini API Key in Settings.";
+export async function getAIAnswer({ question, resumeText, jobDesc, specialInstructions, answerLength, language, model = "gemini-1.5-flash" }) {
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (!apiKey) return "Please set your VITE_GEMINI_API_KEY in the .env file.";
   
   const lengthInstruction = answerLength === "short"
     ? "Answer in 1-2 sentences. Be extremely concise."

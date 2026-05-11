@@ -34,7 +34,6 @@ export function useInterviewLogic(context, settings) {
         jobDesc: context.jobDesc,
         specialInstructions: context.instructions,
         answerLength: settings.answerLength,
-        apiKey: settings.apiKey,
         language: settings.language,
         model: settings.model || "gemini-1.5-flash",
       });
